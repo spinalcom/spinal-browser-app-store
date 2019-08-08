@@ -1,1 +1,2 @@
-# spinal-browser-app-store
+# spinal-browser-maintainer
+a specific browser for maintainer.
