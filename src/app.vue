@@ -31,7 +31,6 @@ import appHeader from "./components/header/header.vue";
 import MainContainer from "./components/container/container.vue";
 import dataService from "./config/data";
 import appstore from "./components/appstore/appstore.vue";
-
 export default Vue.extend({
   data() {
     return {

@@ -1,0 +1,38 @@
+/* theme */
+
+.app-topbar {
+  &.teal {
+    background-color: #2b9;
+    color: #f3f4f5;
+  }
+
+  &.green {
+    background-color: #3c7;
+    color: #f3f4f5;
+  }
+
+  &.yellow {
+    background-color: #ec1;
+    color: #f3f4f5;
+  }
+
+  &.orange {
+    background-color: #e82;
+    color: #f3f4f5;
+  }
+
+  &.red {
+    background-color: #dd4539;
+    color: #f3f4f5;
+  }
+
+  &.blue {
+    background-color: #4486f0;
+    color: #f3f4f5;
+  }
+
+  &.dark-blue {
+    background-color: #345;
+    color: #f3f4f5;
+  }
+}

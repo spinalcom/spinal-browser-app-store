@@ -48,6 +48,7 @@
 <script>
 import { appService } from "spinal-env-viewer-plugin-apps-generator/service/appsService";
 import { SpinalGraphService } from "spinal-env-viewer-graph-service";
+import { spinalIO } from "../../config/spinal-io";
 
 export default {
   name: "appstore",
@@ -115,6 +116,12 @@ export default {
     appService.getAllApps().then(res => {
       this.formatApps(res);
     });
+    let user = spinalIO.getauth();
+    appService.getAppsByUser(user.username).then(res => {
+      console.log("resultat getappByUser");
+      console.log(res);
+    });
+    // console.log(res);
   },
   computed: {
     getStyle() {}

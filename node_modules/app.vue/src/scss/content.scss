@@ -1,0 +1,53 @@
+/* Content */
+
+.app-page,
+.app-content {
+  background-color: rgb(239, 239, 244);
+}
+
+.app-content {
+  overflow-y: scroll;
+  height: 100%;
+}
+
+.app-section,
+.app-list > li,
+.app-list > li.app-button,
+.app-content .app-button,
+.app-input {
+  border: none;
+}
+
+.app-section {
+  margin: 16px;
+  padding: 8px;
+  background: #FFF;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  -webkit-border-radius: 6px;
+  border-radius: 6px;
+}
+
+.app-ios-7 .app-section,
+.app-ios-8 .app-section {
+  border-bottom: none;
+}
+
+.app-section.app-button {
+  margin: 16px;
+  padding: 0;
+}
+
+p.app-section {
+  padding: 12px 16px;
+  color: #665;
+}
+
+.app-content .app-section > * {
+  margin: 8px 0 0;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+}
+
+.app-content .app-section > :first-child {
+  margin-top: 0;
+}
