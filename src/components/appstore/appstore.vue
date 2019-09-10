@@ -70,10 +70,15 @@ export default {
           url:
             "http://localhost:7777/html/appstore/?path=6df1273a26ebd872396a2da1563791c0f3095918a58d721d",
           apps: []
+        },
+        {
+          title: "Ticket",
+          type: "SpinalSystemServiceTicket",
+          url:
+            "http://localhost:7777/html/maintainer/?path=6df1273a26ebd872396a2da1563791c0f3095918a58d721d",
+          apps: []
         }
-      ],
-      urlFake:
-        "https://media.licdn.com/dms/image/C4E0BAQF992P7GC7fiA/company-logo_400_400/0?e=1573084800&v=beta&t=rlVtBdsasBH2HAe33QreRyuzU4oaf7ozagA-sDZBCiI"
+      ]
     };
   },
   props: [],
@@ -100,7 +105,6 @@ export default {
               appService.getFileByElement(obj.image).then(imageLoaded => {
                 obj.image.imageUrl = imageLoaded.imageUrl;
                 browser.apps.push(obj);
-                console.log(browser);
               });
             }
           }
@@ -117,11 +121,7 @@ export default {
       this.formatApps(res);
     });
     let user = spinalIO.getauth();
-    appService.getAppsByUser(user.username).then(res => {
-      console.log("resultat getappByUser");
-      console.log(res);
-    });
-    // console.log(res);
+    appService.getAppsByUser(user.username).then(res => {});
   },
   computed: {
     getStyle() {}
