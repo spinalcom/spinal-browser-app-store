@@ -49,6 +49,7 @@
 import { appService } from "spinal-env-viewer-plugin-apps-generator/service/appsService";
 import { SpinalGraphService } from "spinal-env-viewer-graph-service";
 import { spinalIO } from "../../config/spinal-io";
+import GetAppService from "../../config/getAppService";
 
 export default {
   name: "appstore",
@@ -57,27 +58,20 @@ export default {
       show: false,
       appsLst: [],
       browserLst: [
-        {
-          title: "Group",
-          type: "RoomsGroupContext",
-          url:
-            "http://localhost:7777/html/appstore/?path=6df1273a26ebd872396a2da1563791c0f3095918a58d721d",
-          apps: []
-        },
-        {
-          title: "Equipment",
-          type: "EquipmentGroupContext",
-          url:
-            "http://localhost:7777/html/appstore/?path=6df1273a26ebd872396a2da1563791c0f3095918a58d721d",
-          apps: []
-        },
-        {
-          title: "Ticket",
-          type: "SpinalSystemServiceTicket",
-          url:
-            "http://localhost:7777/html/maintainer/?path=6df1273a26ebd872396a2da1563791c0f3095918a58d721d",
-          apps: []
-        }
+        // {
+        //   title: "Group",
+        //   type: "RoomsGroupContext",
+        //   url:
+        //     "http://localhost:7777/html/appstore/?path=6df1273a26ebd872396a2da1563791c0f3095918a58d721d",
+        //   apps: []
+        // },
+        // {
+        //   title: "Equipment",
+        //   type: "EquipmentGroupContext",
+        //   url:
+        //     "http://localhost:7777/html/appstore/?path=6df1273a26ebd872396a2da1563791c0f3095918a58d721d",
+        //   apps: []
+        // }
       ]
     };
   },
@@ -88,6 +82,7 @@ export default {
       for (let i = 0; i < appsLst.length; i++) {
         const nodeInfo = appsLst[i];
         nodeInfo.element.ptr.load(apps => {
+          console.log("nodeinfo.elem.ptr ==", apps);
           let node = SpinalGraphService.getNode(apps.selectedScene.get());
           for (let j = 0; j < this.browserLst.length; j++) {
             let browser = this.browserLst[j];
@@ -114,14 +109,42 @@ export default {
     formatUrl(browser, app) {
       let url = browser.url + "&node=" + app.context.id.get();
       return url;
+    },
+    tryLst(list) {
+      let self = this;
+      return new Promise(function(res) {
+      let nameList = [];
+
+       for (var i in list) {
+        list[i].element.ptr.load(apps => {
+         if (nameList.includes(apps.context.type.get()) !== true) {
+           console.log("FOUND new ", apps.context.type.get());
+           nameList.push(apps.context.type.get())
+          }
+        })
+       }
+       setTimeout(function() { 
+         self.browserLst = GetAppService.GetList(nameList);
+         console.log("BROWSERLIST ===", self.browserLst);
+         res(true);
+        }, 1000);
+      })
     }
   },
   mounted() {
-    appService.getAllApps().then(res => {
-      this.formatApps(res);
-    });
+
+   appService.getAllApps().then(res => {
+     console.log("application = ", res)
+     this.tryLst(res).then(k => {
+       console.log("then k =");
+        this.formatApps(res) 
+        });
+   });
     let user = spinalIO.getauth();
-    appService.getAppsByUser(user.username).then(res => {});
+    appService.getAppsByUser(user.username).then(res => {
+      console.log("resultat getappByUser");
+      console.log(res);
+    });
   },
   computed: {
     getStyle() {}
