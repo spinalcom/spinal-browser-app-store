@@ -57,22 +57,7 @@ export default {
     return {
       show: false,
       appsLst: [],
-      browserLst: [
-        // {
-        //   title: "Group",
-        //   type: "RoomsGroupContext",
-        //   url:
-        //     "http://localhost:7777/html/appstore/?path=6df1273a26ebd872396a2da1563791c0f3095918a58d721d",
-        //   apps: []
-        // },
-        // {
-        //   title: "Equipment",
-        //   type: "EquipmentGroupContext",
-        //   url:
-        //     "http://localhost:7777/html/appstore/?path=6df1273a26ebd872396a2da1563791c0f3095918a58d721d",
-        //   apps: []
-        // }
-      ]
+      browserLst: [ ]
     };
   },
   props: [],
@@ -86,6 +71,7 @@ export default {
           let node = SpinalGraphService.getNode(apps.selectedScene.get());
           for (let j = 0; j < this.browserLst.length; j++) {
             let browser = this.browserLst[j];
+            console.log("browser type ====", browser.type, "and apps =", apps.context.type.get());
             if (browser.type == apps.context.type.get()) {
               let obj = {
                 context: apps.context,
@@ -108,6 +94,7 @@ export default {
     },
     formatUrl(browser, app) {
       let url = browser.url + "&node=" + app.context.id.get();
+      console.log("URL ====", url);
       return url;
     },
     tryLst(list) {
@@ -118,23 +105,19 @@ export default {
        for (var i in list) {
         list[i].element.ptr.load(apps => {
          if (nameList.includes(apps.context.type.get()) !== true) {
-           console.log("FOUND new ", apps.context.type.get());
            nameList.push(apps.context.type.get())
           }
         })
        }
        setTimeout(function() { 
          self.browserLst = GetAppService.GetList(nameList);
-         console.log("BROWSERLIST ===", self.browserLst);
          res(true);
         }, 1000);
       })
     }
   },
   mounted() {
-
    appService.getAllApps().then(res => {
-     console.log("application = ", res)
      this.tryLst(res).then(k => {
        console.log("then k =");
         this.formatApps(res) 

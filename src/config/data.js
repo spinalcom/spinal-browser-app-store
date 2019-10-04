@@ -31,18 +31,6 @@ let dataService = {
     })
 
   },
-  // async bindTicketService(node) {
-  //   return new Promise(resolve => {
-  //     let context = await graph.SpinalGraphService.getContext(
-  //       SERVICE_NAME );
-  //   });
-  // },
-  // bindTicketProcess() {
-  //   return new Promise(resolve => {
-  //     let context = await graph.SpinalGraphService.getContext(
-  //       SERVICE_NAME );
-  //   });
-  // },
   async getTickets(rooms, processInfo) {
     await graph.init();
 
