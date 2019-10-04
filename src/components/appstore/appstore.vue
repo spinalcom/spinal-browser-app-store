@@ -18,7 +18,8 @@
                   md4
                   class="siezFlexBox">
             <v-card min-height="160px">
-              <a :href="formatUrl(browser, app)">
+              <a target="_blank"
+                 :href="formatUrl(browser, app)">
                 <v-img :src="app.image.imageUrl"
                        height="100"></v-img>
               </a>
@@ -57,7 +58,7 @@ export default {
     return {
       show: false,
       appsLst: [],
-      browserLst: [ ]
+      browserLst: []
     };
   },
   props: [],
@@ -71,7 +72,12 @@ export default {
           let node = SpinalGraphService.getNode(apps.selectedScene.get());
           for (let j = 0; j < this.browserLst.length; j++) {
             let browser = this.browserLst[j];
-            console.log("browser type ====", browser.type, "and apps =", apps.context.type.get());
+            console.log(
+              "browser type ====",
+              browser.type,
+              "and apps =",
+              apps.context.type.get()
+            );
             if (browser.type == apps.context.type.get()) {
               let obj = {
                 context: apps.context,
@@ -100,29 +106,29 @@ export default {
     tryLst(list) {
       let self = this;
       return new Promise(function(res) {
-      let nameList = [];
+        let nameList = [];
 
-       for (var i in list) {
-        list[i].element.ptr.load(apps => {
-         if (nameList.includes(apps.context.type.get()) !== true) {
-           nameList.push(apps.context.type.get())
-          }
-        })
-       }
-       setTimeout(function() { 
-         self.browserLst = GetAppService.GetList(nameList);
-         res(true);
+        for (var i in list) {
+          list[i].element.ptr.load(apps => {
+            if (nameList.includes(apps.context.type.get()) !== true) {
+              nameList.push(apps.context.type.get());
+            }
+          });
+        }
+        setTimeout(function() {
+          self.browserLst = GetAppService.GetList(nameList);
+          res(true);
         }, 1000);
-      })
+      });
     }
   },
   mounted() {
-   appService.getAllApps().then(res => {
-     this.tryLst(res).then(k => {
-       console.log("then k =");
-        this.formatApps(res) 
-        });
-   });
+    appService.getAllApps().then(res => {
+      this.tryLst(res).then(k => {
+        console.log("then k =");
+        this.formatApps(res);
+      });
+    });
     let user = spinalIO.getauth();
     appService.getAppsByUser(user.username).then(res => {
       console.log("resultat getappByUser");
